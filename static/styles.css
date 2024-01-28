@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Ubuntu:wght@300&display=swap');
+
+:root {
+  --yellow-light: #f3c938 ;
+  --yellow-shadow: #dbb732 ;
+  /* --bs-body-font-size: 1.1rem; */
+  /* --bs-body-line-height: 1.7; */
+  /* --bs-tertiary-bg-rgb: 148, 215, 224; */
+  /* --bs-bg-opacity: 0.5; */
+
+}
+a {
+  color: #3f5599;
+}
+
+a:hover {
+  color: #5979da;
+}
+
+body {
+  background-color: #bad6dc;
+  background-image: url('/images/bricks-background-01.svg');
+  font-family: 'Ubuntu', sans-serif;
+}
+
+h1, h2, h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  color: #353f5c;
+}
+
+.yasqe_share {
+  display: none !important;
+}
+
+td sup {
+  font-size: 0.6rem;
+}
+
+.simple-view td sup {
+  display: none;
+}
+
+.fs-10 {
+  font-size: 0.6rem;
+}
+

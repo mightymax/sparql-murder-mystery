@@ -1,0 +1,16 @@
+FROM node:lts as build
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . ./
+RUN npm run build
+
+FROM node:lts
+LABEL SPARQL Murder Mystery | Web App
+WORKDIR /app
+COPY --from=build /app/build /app
+RUN echo '{"type": "module"}' > package.json
+EXPOSE 3000
+ENV NODE_ENV=production
+ENTRYPOINT [ "node", "index.js"]
+
