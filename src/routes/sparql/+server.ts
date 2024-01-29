@@ -16,7 +16,6 @@ export async function POST({ request }) {
   query = query as Query
   if (query.queryType !== 'SELECT') return json({ error: `${query.queryType} query recieved: not allowed` }, { status: 400 });
   query = query as SelectQuery
-  console.log(query.limit)
   if (query.limit && query.limit > 100) query.limit = 100
   else if (!query.limit) query.limit = 50
 
@@ -46,5 +45,7 @@ export async function POST({ request }) {
     }
     return res.json()
   }).then (result => json(result, {status: 200}))
-  .catch(e => json((e as Error), {status: 500}))
+  .catch(e => {
+    return json(new Error(`Error loading API ${endpoint}: ${(e as Error).message}`),  {status: 500})
+  })
 }
