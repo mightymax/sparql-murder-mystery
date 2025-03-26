@@ -240,9 +240,9 @@ function main(dbFile, dest) {
             console.log(`No extractor for table '${table.name}'`);
     });
 }
-if (!fs.existsSync('./data/rdf')) fs.mkdirSync('./data/rdf', {recursive: true})
+if (!fs.existsSync('./data/mystery/rdf')) fs.mkdirSync('./data/mystery/rdf', {recursive: true})
 const dbPath = './data/sql-murder-mystery.db';
-main(dbPath, './data/rdf');
+main(dbPath, './data/mystery/rdf');
 // const db = fs.createWriteStream(dbPath);
 // https.get(DB_LOC, (res) => {
 //     res.pipe(db);

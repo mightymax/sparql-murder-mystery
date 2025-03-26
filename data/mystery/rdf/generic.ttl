@@ -1,0 +1,28 @@
+@prefix sdo: <https://schema.org/>.
+@prefix def: <mystery:>.
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+<get-fit-now> a sdo:ExerciseGym.
+def:DriversLicense rdfs:subClassOf sdo:Thing;
+    rdfs:label "Drivers License".
+def:PersonProperty rdfs:subClassOf sdo:Property;
+    rdfs:domain sdo:Person;
+    rdfs:label "Property describing a person's appearance on a Drivers License".
+def:age a def:PersonProperty;
+    rdfs:range xsd:integer;
+    rdfs:label "Age of a person in years".
+def:hairColor a def:PersonProperty;
+    rdfs:label "Hair color of a person".
+def:eyeColor a def:PersonProperty;
+    rdfs:label "Eye color of a person".
+def:driver a sdo:Property;
+    rdfs:label "The driver registred on the licence";
+    rdfs:range sdo:Person;
+    rdfs:domain def:DriversLicense.
+def:car a sdo:Property;
+    rdfs:label "The car registred on the licence";
+    rdfs:range sdo:Car;
+    rdfs:domain def:DriversLicense.
+<get-fit-now> sdo:name "Get Fit Now!".

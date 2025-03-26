@@ -1,19 +1,21 @@
 version: "3.8"
 services:
   app:
+    profiles:
+      - production
     build:
       context: .
-      dockerfile: Dockerfile.app
-    restart: always
+      dockerfile: Dockerfile
+    # restart: always
     environment:
       - ORIGIN=http://localhost:3000
       - PORT=3000
     ports:
       - ${PORT}:3000
-  sparql:
-    build:
-      context: .
-      dockerfile: Dockerfile.sparql
-    ports:
-      - 3030:3030
-    restart: always
+  # sparql:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.sparql
+  #   ports:
+  #     - 3030:3030
+    # restart: always
