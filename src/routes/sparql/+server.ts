@@ -23,7 +23,7 @@ export async function POST({ request }) {
     query.base = 'mystery:'
   }
   rq = (new Generator()).stringify(query)
-  const endpoint = SPARQL_ENDPOINT ?? 'http://localhost:3030/sparql-murder-mystery/sparql'
+  const endpoint = process.env.SPARQL_ENDPOINT ?? SPARQL_ENDPOINT ??  'http://localhost:3030/sparql-murder-mystery/sparql'
 
   return fetch(endpoint, {
     body: "query=" + encodeURIComponent(rq),
@@ -41,11 +41,14 @@ export async function POST({ request }) {
   })
   .then(res => {
     if (!res.ok) {
+      console.error(`HTTP Error${res.status} loading API ${endpoint}: ${res.statusText}`)
       return json({status: res.status, error: res.statusText}, { status: res.status });
     }
     return res.json()
   }).then (result => json(result, {status: 200}))
   .catch(e => {
+    console.error(`Error loading API ${endpoint}: ${(e as Error).message}`)
+    console.error(e)
     return json(new Error(`Error loading API ${endpoint}: ${(e as Error).message}`),  {status: 500})
   })
 }
