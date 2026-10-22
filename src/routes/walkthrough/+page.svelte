@@ -1,4 +1,1 @@
-<script lang="ts">
-  import { goto } from '$app/navigation';
-  goto(`/walkthrough/stage/1`)
-</script>
+<!-- The server load redirects to the first walkthrough stage. -->

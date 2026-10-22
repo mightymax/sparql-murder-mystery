@@ -1,8 +1,13 @@
 <script lang="ts">
-  export let id: string = 'prompt'
+  interface Props {
+    id?: string;
+    children?: import('svelte').Snippet;
+  }
+
+  let { id = 'prompt', children }: Props = $props();
 </script>
-<a href="{'#'}" data-bs-toggle="modal" data-bs-target="#{id}">
-  <slot>prompt</slot>
+<a href="#{id}" data-bs-toggle="modal" data-bs-target="#{id}">
+  {#if children}{@render children()}{:else}prompt{/if}
 </a>
 <div id="{id}" class="modal" tabindex="-1">
   <div class="modal-dialog">
@@ -14,9 +19,9 @@
       <div class="modal-body">
         <p class="fs-5">
           A crime has taken place and the detective needs your help.
-          The detective gave you the crime scene report, but you somehow lost it. 
-          You vaguely remember that the crime was a <em>murder</em> that occurred sometime 
-          on <em>Jan.15, 2018</em> and that it took place in <em>SPARQL City</em>. 
+          The detective gave you the crime scene report, but you somehow lost it.
+          You vaguely remember that the crime was a <em>murder</em> that occurred sometime
+          on <em>Jan.15, 2018</em> and that it took place in <em>SPARQL City</em>.
         </p>
       </div>
     </div>

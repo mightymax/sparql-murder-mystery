@@ -13,16 +13,16 @@ const skolemIri = (prefix, id) => namedNode(`${prefix}:${id ?? ID(prefix)}`);
 const ID = (classname) => {
     if (!identifiers.has(classname))
         identifiers.set(classname, 1);
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
     else
         identifiers.set(classname, identifiers.get(classname) + 1);
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
     return (identifiers.get(classname)).toString(16).padStart(4, '0');
 };
 const club = namedNode('get-fit-now');
 const date = (date) => literal(`${date.toString().substring(0, 4)}-${date.toString().substring(4, 6)}-${date.toString().substring(6, 8)}`, xsd('date'));
 const dateTime = (date, time) => {
-    let t = '';
+    let t;
     if (time < 1000)
         t = '00:00:00';
     else {

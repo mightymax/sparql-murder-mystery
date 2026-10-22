@@ -1,20 +1,19 @@
-import { json } from '@sveltejs/kit';
-import { SPARQL_ENDPOINT } from '$env/static/private';
-import type { Query, SelectQuery } from 'sparqljs'
+import { SPARQL_ENDPOINT } from "$app/env/private";
+import type { Query, SelectQuery } from 'sparqljs';
 import pkg from 'sparqljs';
 const {Generator, Parser} = pkg;
 export async function POST({ request }) {
 	const form = await request.formData();
   let rq = form.get("query")
   if (!rq) {
-    return json({ error: 'no query recieved' }, { status: 400 });
+    return Response.json({ error: 'no query recieved' }, { status: 400 });
   }
 
   const parser = new Parser();
   let query = parser.parse(rq as string)
-  if (query.type !== 'query') return json({ error: 'update query recieved: not allowed' }, { status: 400 });
+  if (query.type !== 'query') return Response.json({ error: 'update query recieved: not allowed' }, { status: 400 });
   query = query as Query
-  if (query.queryType !== 'SELECT') return json({ error: `${query.queryType} query recieved: not allowed` }, { status: 400 });
+  if (query.queryType !== 'SELECT') return Response.json({ error: `${query.queryType} query recieved: not allowed` }, { status: 400 });
   query = query as SelectQuery
   if (query.limit && query.limit > 100) query.limit = 100
   else if (!query.limit) query.limit = 50
@@ -22,8 +21,8 @@ export async function POST({ request }) {
   if (!query.base) {
     query.base = 'mystery:'
   }
-  rq = (new Generator()).stringify(query)
-  const endpoint = process.env.SPARQL_ENDPOINT ?? SPARQL_ENDPOINT ??  'http://localhost:3030/sparql-murder-mystery/sparql'
+  rq = new Generator().stringify(query);
+  const endpoint = process.env.SPARQL_ENDPOINT || SPARQL_ENDPOINT || 'http://localhost:3030/sparql-murder-mystery/sparql';
 
   return fetch(endpoint, {
     body: "query=" + encodeURIComponent(rq),
@@ -38,17 +37,17 @@ export async function POST({ request }) {
     method: "POST",
     mode: "cors",
     redirect: "follow"
-  })
-  .then(res => {
+  }).then((res) => {
     if (!res.ok) {
       console.error(`HTTP Error${res.status} loading API ${endpoint}: ${res.statusText}`)
-      return json({status: res.status, error: res.statusText}, { status: res.status });
+      return Response.json({status: res.status, error: res.statusText}, { status: res.status });
     }
-    return res.json()
-  }).then (result => json(result, {status: 200}))
-  .catch(e => {
-    console.error(`Error loading API ${endpoint}: ${(e as Error).message}`)
-    console.error(e)
-    return json(new Error(`Error loading API ${endpoint}: ${(e as Error).message}`),  {status: 500})
-  })
+
+    return res.json();
+  }).then((result) => Response.json(result, { status: 200 })).catch((e) => {
+    console.error(`Error loading API ${endpoint}: ${(e as Error).message}`);
+    console.error(e);
+
+    return Response.json(new Error(`Error loading API ${endpoint}: ${(e as Error).message}`), { status: 500 });
+  });
 }

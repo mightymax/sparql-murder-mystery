@@ -1,11 +1,16 @@
-<script>
+<script lang="ts">
   import Header from '../lib/Header.svelte'
-  import Prompt from '$lib/Prompt.svelte';
+  import Prompt from '#lib/Prompt.svelte';
+	interface Props {
+		children?: import('svelte').Snippet;
+	}
+
+	let { children }: Props = $props();
 </script>
 <Header/>
 <main>
 	<div class="container">
-		<slot />
+		{@render children?.()}
 	</div>
 	<Prompt id="newspaper_modal">
 		<img src="/images/newspaper.svg" id="newspaper" alt="Newspaper of SPARQL City"/>

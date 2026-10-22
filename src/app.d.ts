@@ -9,13 +9,11 @@ declare global {
 		// interface Platform {}
 	}
 
-	namespace bootstrap {
-		
-	}
+	const bootstrap: typeof import('bootstrap');
 
 	interface Binding {
-		type: 'literal' | 'uri' | 'blanknode', 
-		value: string, 
+		type: 'literal' | 'uri' | 'blanknode',
+		value: string,
 		datatype?: string
 	}
 	interface SparqlResults {
@@ -32,8 +30,8 @@ declare global {
 		},
 		display: {
 			wrapper: HTMLElement
-		} & unkown
-		options: unkown
+		} & unknown
+		options: unknown
 		setSize: (w: number|string, h: number|string) => void
 		setValue: (v: string) => void
 		collapsePrefixes: (v: boolean) => void
@@ -49,7 +47,7 @@ declare global {
 	class Yasqe {
 		constructor(node: HTMLElement, opts: unknown): Yasqe
 	}
-	
+
 }
 
 export {};

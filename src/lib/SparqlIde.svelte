@@ -8,14 +8,11 @@
   }
   const prefixesString = Object.keys(prefixes).map(ns => `prefix ${ns}: <${prefixes[ns as keyof typeof prefixes]}>`).join('\n')
   import { onMount } from 'svelte';
-  let fullscreenModal: bootstrap.Modal
-  let fullscreenModalContainer: HTMLElement
-  let fullscreenModalBody: HTMLElement
-  export let lines: number | undefined = undefined
-  export let solution: string | undefined = undefined
-  export let columnStyles: string[] = []
-  const getQuery = (query?: string) => 
-    'base <mystery:>\n' + 
+  let fullscreenModal: import('bootstrap').Modal
+  let fullscreenModalContainer: HTMLElement = $state<HTMLElement>()!
+  let fullscreenModalBody: HTMLElement = $state<HTMLElement>()!
+  const getQuery = (query?: string) =>
+    'base <mystery:>\n' +
     prefixesString + '\n' + (query ?? sparqlIdeEditorNode.innerHTML)
     .replaceAll('&lbrace;', '{')
     .replaceAll('&rbrace;', '}')
@@ -23,11 +20,25 @@
     .replaceAll('&gt;', '>')
     .replaceAll('&amp;', '&')
 
-  let sparqlIdeContainer: HTMLElement
-  let sparqlIdeContainerChildnodes: HTMLElement
-  let sparqlIdeEditorNode: HTMLElement
+  let sparqlIdeContainer: HTMLElement = $state<HTMLElement>()!
+  let sparqlIdeContainerChildnodes: HTMLElement = $state<HTMLElement>()!
+  let sparqlIdeEditorNode: HTMLElement = $state<HTMLElement>()!
   let editor: Yasqe
-  export let validator: ((results: Record<string, Binding>) => boolean) | undefined = undefined
+  interface Props {
+    lines?: number | undefined;
+    solution?: string | undefined;
+    columnStyles?: string[];
+    validator?: ((results: Record<string, Binding>) => boolean) | undefined;
+    children?: import('svelte').Snippet;
+  }
+
+  let {
+    lines = undefined,
+    solution = undefined,
+    columnStyles = [],
+    validator = undefined,
+    children
+  }: Props = $props();
 
   const render = (binding: Binding) => {
     if (binding.type === 'uri') {
@@ -58,8 +69,8 @@
     editor.setSize('100%', ((lines -1)* 20))
   }
 
-  let results: SparqlResults | undefined
-  let error: Error | undefined = undefined
+  let results: SparqlResults | undefined = $state()
+  let error: Error | undefined = $state(undefined)
 
   let query: string
 
@@ -104,8 +115,9 @@
     const iconFullscreen = '<i class="bi bi-arrows-fullscreen"></i>'
     const iconFullscreenExit = '<i class="bi bi-fullscreen-exit"></i>'
     if (fullscreenModal === undefined) {
-      fullscreenModalContainer.addEventListener('hidden.bs.modal', event => {
-        editor.display.wrapper.querySelector('.btn-fullscreen').innerHTML = iconFullscreen
+      fullscreenModalContainer.addEventListener('hidden.bs.modal', () => {
+        const toggle = editor.display.wrapper.querySelector('.btn-fullscreen');
+        if (toggle) toggle.innerHTML = iconFullscreen
         sparqlIdeContainer.appendChild(
           fullscreenModalBody.removeChild(sparqlIdeContainerChildnodes)
         )
@@ -117,7 +129,8 @@
     b.innerHTML = iconFullscreen
     b.onclick = () => {
       if (b.innerHTML === iconFullscreen) {
-        editor.display.wrapper.querySelector('.btn-fullscreen').innerHTML = iconFullscreenExit
+        const toggle = editor.display.wrapper.querySelector('.btn-fullscreen');
+        if (toggle) toggle.innerHTML = iconFullscreenExit
         fullscreenModalBody.appendChild(
           sparqlIdeContainer.removeChild(sparqlIdeContainerChildnodes)
         )
@@ -140,9 +153,9 @@
   onMount(() => {
     query = getQuery()
     sparqlIdeEditorNode.innerHTML = ''
-    editor = new Yasqe(sparqlIdeEditorNode, { 
-      createShortLink: false,  
-      requestConfig: { 
+    editor = new Yasqe(sparqlIdeEditorNode, {
+      createShortLink: false,
+      requestConfig: {
         endpoint,
         method: 'POST'
       },
@@ -202,10 +215,10 @@
 <sup style="display: none;" class="iri"></sup>
 <div bind:this={sparqlIdeContainer}>
   <div bind:this={sparqlIdeContainerChildnodes}>
-    <div bind:this={sparqlIdeEditorNode}><slot /></div>
+    <div bind:this={sparqlIdeEditorNode}>{@render children?.()}</div>
     {#if error !== undefined}
     <div class="alert alert-warning" role="alert">
-      <p>Your SPARQL query did not result in a succesful response. 
+      <p>Your SPARQL query did not result in a succesful response.
       This might be because your query contains syntax error (watch the editor for hints!),
       or the SPARQL endpoint was not able to process the results on time, and casued a timeout.</p>
       <p>Error message: <code>{error.message}</code></p>
@@ -214,7 +227,7 @@
     {#if results !== undefined}
       {#if results.results.bindings.length === 0}
         <div class="alert alert-warning" role="alert">
-          <p>Your SPARQL query was correct, but it did not return any results. 
+          <p>Your SPARQL query was correct, but it did not return any results.
             Remember that you can always click the <em>reset</em> button to go to the original query.</p>
         </div>
       {:else}

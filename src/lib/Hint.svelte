@@ -1,3 +1,11 @@
+<script lang="ts">
+  interface Props {
+    children?: import('svelte').Snippet;
+  }
+
+  let { children }: Props = $props();
+</script>
+
 <style>
 .hint {
   background-color: #eadfc1;
@@ -10,5 +18,5 @@
 </style>
 <p class="hint">
   <i class="bi bi-info-square-fill"></i>
-  <slot/>
+  {@render children?.()}
 </p>

@@ -1,7 +1,7 @@
 <script>
-  import Hint from '$lib/Hint.svelte';
-  import Intro from '$lib/Intro.svelte';
-  import Stages from '$lib/Stages.svelte';
+  import Hint from '#lib/Hint.svelte';
+  import Intro from '#lib/Intro.svelte';
+  import Stages from '#lib/Stages.svelte';
 </script>
 <Stages stage={1}/>
 <Intro mode="walkthrough" />
@@ -16,6 +16,6 @@
   the box when you started.
 </p>
 <Hint>
-  Make sure you study and remember the clues in this introduction, paying good attention to the important hints 
+  Make sure you study and remember the clues in this introduction, paying good attention to the important hints
   marked with a fingerprint. You can always look at the clues by clicking the newspaper in the header.
 </Hint>

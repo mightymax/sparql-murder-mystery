@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Stages from '$lib/Stages.svelte';
+  import Stages from '#lib/Stages.svelte';
 </script>
 <Stages stage={2}/>
 <h2>Some definitions</h2>
@@ -46,25 +46,25 @@
 </p>
 <h3>The semantics of the game</h3>
 <p>
-  The SPARQL Murder Mystery uses semantics from <a href="https://schema.org">schema.org vocabulary</a> 
-  (prefixed as <code>sdo:</code>) as much as possible. 
+  The SPARQL Murder Mystery uses semantics from <a href="https://schema.org">schema.org vocabulary</a>
+  (prefixed as <code>sdo:</code>) as much as possible.
   If you see an Iri used to identify something, you can lookup what that Iri identifies exactly by simply clicking on the link.
   If no link is proviced, than the identifier is just for the purpose of this game.
 </p>
 <p>
   Often we use the vocabulary loosly. This is unwise in real-life Knowledge Graphs, but it makes
   the game easier to play. For example, schema.org defines that the object for preciate
-  <code>sdo:spatialCoverage</code> should be a <code>sdo:Place</code>, 
-  but in our Knowledge Graph we simply use the placename as a literal. 
+  <code>sdo:spatialCoverage</code> should be a <code>sdo:Place</code>,
+  but in our Knowledge Graph we simply use the placename as a literal.
   Some knowledge requires specific modelling using a custom
   vocabulary available in this dataset prefixed with <code>mystery:</code>.
 </p>
 <p>If you see Iri's like <code>&lt;mystery:age&gt;</code>, remember that it is a valid Iri and can be used to identifiy something in our Knowledge Graph.
-In real life you would probably not use those kinds of Iri's since the do not point to an internet address 
+In real life you would probably not use those kinds of Iri's since the do not point to an internet address
 (they can not be resolved).
 </p>
 <p>To make our queries more readable we use the SPARQL keyword <code>base</code>. When a "base" is defined,
-releative Iri's like <code>&lt;age&gt;</code> can still be used: <br><code>&lt;mystery:age&gt;</code> 
+releative Iri's like <code>&lt;age&gt;</code> can still be used: <br><code>&lt;mystery:age&gt;</code>
 is the same Iri as <code>&lt;age&gt;</code> if <code>base &lt;mystery:&gt;</code> is defined.
 </p>
 

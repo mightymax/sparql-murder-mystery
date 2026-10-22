@@ -1,13 +1,13 @@
 <script lang="ts">
-  import Hint from '$lib/Hint.svelte';
-import SparqlIde from "$lib/SparqlIde.svelte";
-  import Stages from "$lib/Stages.svelte";
+  import Hint from '#lib/Hint.svelte';
+import SparqlIde from "#lib/SparqlIde.svelte";
+  import Stages from "#lib/Stages.svelte";
 
-  const solution1 = `select * 
-where { ?person a sdo:Person ; 
-  <age> ?age;  <eyeColor> ?eyeColor ; 
+  const solution1 = `select *
+where { ?person a sdo:Person ;
+  <age> ?age;  <eyeColor> ?eyeColor ;
   <hairColor> ?hairColor ; sdo:height ?height;
-} 
+}
 order by asc(?height) desc (?age) asc(?eyeColor)
 limit 10`
 
@@ -52,7 +52,7 @@ order by desc(?houseNumber) limit 1`
   How old is the oldest person with a drivers license? With a small amount of
   data, you might be able to just eyeball it, but there hundreds of thousands of
   statement in the Knowledge Graph. (try <code
-    >select (count(*) as ?count) where {"{"} ?s ?p ?o {"}"}</code
+    >select (count(*) as ?count) where {"{"} ?s ?p ?o }</code
   > if you want to know just how many!) You can't just look over that list to find
   the answer.
 </p>
@@ -84,7 +84,7 @@ order by desc(?houseNumber) limit 1`
   </blockquote>
 </figure>
 <SparqlIde>
-  select (max(?age) as ?MaxAge) where {"{"} ?person a sdo:Person ; &lt;age&gt; ?age {"}"}
+  select (max(?age) as ?MaxAge) where {"{"} ?person a sdo:Person ; &lt;age&gt; ?age }
 </SparqlIde>
 <p>
   As you see in this query we use a RDF predicate <code
@@ -96,10 +96,10 @@ order by desc(?houseNumber) limit 1`
   properties known to persons (<code>sdo:Person</code>):
 </p>
 <SparqlIde>
-  select distinct ?predicate where {"{"} ?person a sdo:Person ; ?predicate ?object {"}"}
+  select distinct ?predicate where {"{"} ?person a sdo:Person ; ?predicate ?object }
 </SparqlIde>
 <Hint>
-  In some columns you will see values suffixed with <code><sup>^^&lt;xsd:&hellip;&gt;</sup></code>. 
+  In some columns you will see values suffixed with <code><sup>^^&lt;xsd:&hellip;&gt;</sup></code>.
   In RDF, these are called literals, and the suffix is the datatype of that literal. hat will tell us if information is a number, date, etc.
   In most knowledge graphs, the <a href="https://www.tutorialspoint.com/xsd/index.htm" target="_blank">XML Schema Definition</a> commonly known as XSD is used to provide datatypes for literal.
 </Hint>
@@ -107,7 +107,7 @@ order by desc(?houseNumber) limit 1`
   There's another way to find minimum and maximum values, while also seeing more
   of the data. You can control the sort order of results you get. It's really
   quite intuitive: just use <code>order by</code> followed by a binding name. It can be
-  challenging when there's a lot of data! By default, <code>order by</code> goes in "ascending" (smallest to largest, or A to Z, 0 to 9) order, 
+  challenging when there's a lot of data! By default, <code>order by</code> goes in "ascending" (smallest to largest, or A to Z, 0 to 9) order,
   but you can be specific with <code>asc</code> for ascending, or you can reverse it with <code>desc</code>.
 </p>
 
@@ -118,16 +118,16 @@ order by desc(?houseNumber) limit 1`
   <figcaption class="blockquote-footer">
     After you've run it, change
   <code>asc</code> to <code>desc</code>, or take that part out completely to see how the results differ.
-  Try sorting on other bindings, click the <button class="btn btn-secondary btn-sm"><i class="bi bi-question-square-fill"></i></button> button
+  Try sorting on other bindings, click the <button class="btn btn-secondary btn-sm" aria-label="Show solution"><i class="bi bi-question-square-fill"></i></button> button
   if you want to see how to sort on multiple bindings.
   </figcaption>
 </figure>
 <SparqlIde solution={solution1}>
-select * 
-where {'{'} ?person a sdo:Person ; 
-  &lt;age&gt; ?age;  &lt;eyeColor&gt; ?eyeColor ; 
+select *
+where {'{'} ?person a sdo:Person ;
+  &lt;age&gt; ?age;  &lt;eyeColor&gt; ?eyeColor ;
   &lt;hairColor&gt; ?hairColor ; sdo:height ?height;
-{'}'} 
+}
 order by asc (?age) limit 10
 </SparqlIde>
 <Hint>

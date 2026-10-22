@@ -1,6 +1,6 @@
 <script lang="ts">
-  import SparqlIde from '$lib/SparqlIde.svelte';
-import Stages from '$lib/Stages.svelte';
+  import SparqlIde from '#lib/SparqlIde.svelte';
+import Stages from '#lib/Stages.svelte';
 </script>
 <Stages stage={3}/>
 
@@ -53,9 +53,9 @@ import Stages from '$lib/Stages.svelte';
 <h3>Your first SPARQL Query</h3>
 <p>In the game we provide input boxes where you can type your SPARQL Query. Below is an example of one of the simpelest possible queries.
   Don't worry if you do not get this query, this is just to get yourself familiair with the SPARQL Query input box.
- Just click the <btn class="btn btn-secondary btn-sm"><i class="bi bi-search"></i> search</btn> button to run the query 
+ Just click the <btn class="btn btn-secondary btn-sm"><i class="bi bi-search"></i> search</btn> button to run the query
  or the <btn class="btn btn-secondary btn-sm"><i class="bi bi-arrow-counterclockwise"></i> reset</btn> button to go back to the original query.
- In most cases it is wise to use the <code>limit</code> SPARQL keyword to make sure you do not load the entire dataset. 
+ In most cases it is wise to use the <code>limit</code> SPARQL keyword to make sure you do not load the entire dataset.
  This will cause your query to timeout.
 </p>
-<SparqlIde>select * where {'{'} ?subject ?predicate ?object {'}'} limit 10</SparqlIde>
+<SparqlIde>select * where {'{'} ?subject ?predicate ?object } limit 10</SparqlIde>

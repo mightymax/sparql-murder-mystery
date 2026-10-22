@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
-  import ClassDiagram from '$lib/ClassDiagram.svelte';
-  import SparqlIde from '$lib/SparqlIde.svelte';
-  import Stages from "$lib/Stages.svelte";
+
+  import ClassDiagram from '#lib/ClassDiagram.svelte';
+  import SparqlIde from '#lib/SparqlIde.svelte';
+  import Stages from "#lib/Stages.svelte";
 
   const solution1 = `select ?person ?name ?transcript where {
   ?person a sdo:Person ; sdo:name ?name ; <income> ?taxIncome; <driversLicense> ?driversLicense .
@@ -24,11 +24,11 @@
 <p>
   Until now, we’ve been asking questions that can be answered by considering
   data from only a single class. But what if we need to ask more complex questions
-  that simultaneously require data from two different classes? With SPARQL just find commonf 
+  that simultaneously require data from two different classes? With SPARQL just find commonf
   information and use that to lin statements together.
 </p>
 
-<p>One of the more common ways to link data with SPARQL is to use the <code>object</code> from 
+<p>One of the more common ways to link data with SPARQL is to use the <code>object</code> from
   one statement as <code>subject</code> for another.
 </p>
 
@@ -37,7 +37,7 @@
     <p>Run this query to identify the biggest annual earners in our knowledge graph.</p>
   </blockquote>
   <figcaption class="blockquote-footer">
-    Try editing the query to return more data, or to find people with different incomes. 
+    Try editing the query to return more data, or to find people with different incomes.
     Try using other linking, you can always look at the <ClassDiagram /> for reference.
   </figcaption>
 </figure>
@@ -46,11 +46,11 @@ select ?name ?taxID ?annualIncome where {'{'}
   ?person a sdo:Person ; sdo:name ?name ; &lt;income&gt; ?income .
   ?income a sdo:MonetaryAmount; sdo:value ?annualIncome; sdo:taxID ?taxID .
   filter(?annualIncome &gt; 450000)
-{'}'}
+}
 order by desc(?annualIncome) limit 10
 </SparqlIde>
 
-<p>Sometimes you want to connect more than one class. 
+<p>Sometimes you want to connect more than one class.
   SPARQL lets you use as many links as you like.</p>
 <figure>
   <blockquote class="blockquote">
@@ -68,11 +68,11 @@ select ?name ?income ?gender ?eyes ?hair where {'{'}
   ?driversLicense a sdo:Permit; &lt;driver&gt; ?driver .
   ?driver sdo:gender ?gender; &lt;eyeColor&gt; ?eyes; &lt;hairColor&gt; ?hair .
   filter(?income &gt; 450000)
-{'}'}
+}
 order by desc(?income) limit 10
 </SparqlIde>
-<p>Now that you know how to search linked data, 
-  you should be able to find the interview transcripts for the <a href={'#find-suspect-1'} on:click={() => goto('/walkthrough/stage/6')}>two witnesses you identified before</a>. 
+<p>Now that you know how to search linked data,
+  you should be able to find the interview transcripts for the <a href="/walkthrough/stage/6">two witnesses you identified before</a>.
   Give it a try!
 </p>
 <figure>
@@ -80,15 +80,15 @@ order by desc(?income) limit 10
     <p>Write a query that shows the interview transcripts for our two subjects.</p>
   </blockquote>
   <figcaption class="blockquote-footer">
-    There's more than one way to do it, so you may learn the answer even if the results say 'Incorrect'. 
-    The official solution does it in one query, but you don't have to. 
+    There's more than one way to do it, so you may learn the answer even if the results say 'Incorrect'.
+    The official solution does it in one query, but you don't have to.
     Technically you don't even need to use linking to get the transcripts, but give it a try.
   </figcaption>
 </figure>
 <SparqlIde lines={9} solution={solution1} validator={validator} columnStyles={['', 'white-space: nowrap;', '']}>
 </SparqlIde>
 
-<p>Now you know enough SPARQL to solve the mystery. 
-  You'll need to read the <ClassDiagram /> and make some reasonable assumptions, 
+<p>Now you know enough SPARQL to solve the mystery.
+  You'll need to read the <ClassDiagram /> and make some reasonable assumptions,
   but there's no other syntax that you need!</p>
 <p class="fs-4"><a href="/walkthrough/stahes/8">Go get them!</a></p>
