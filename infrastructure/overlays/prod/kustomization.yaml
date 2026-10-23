@@ -3,5 +3,5 @@ kind: Kustomization
 resources:
   - manifest.yaml
 images:
-  - name: ghcr.io/mightymax/sparql-murder-mystery
+  - name: ghcr.io/mightymax/sparql-murder-mystery-app
     newTag: latest

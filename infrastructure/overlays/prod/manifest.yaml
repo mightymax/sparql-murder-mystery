@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: sparql-murder-mystery
-        image: ghcr.io/mightymax/sparql-murder-mystery:latest
+        image: ghcr.io/mightymax/sparql-murder-mystery-app:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 3000

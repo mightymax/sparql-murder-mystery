@@ -13,7 +13,7 @@ jobs:
   release:
     runs-on: ubuntu-24.04-arm
     env:
-      IMAGE_REPO: ghcr.io/mightymax/sparql-murder-mystery
+      IMAGE_REPO: ghcr.io/mightymax/sparql-murder-mystery-app
     steps:
       - name: Checkout tag
         uses: actions/checkout@v4
