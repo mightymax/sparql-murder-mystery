@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sparql-murder-mystery
+  namespace: sparql-murder-mystery
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sparql-murder-mystery
+  template:
+    metadata:
+      labels:
+        app: sparql-murder-mystery
+    spec:
+      containers:
+      - name: sparql-murder-mystery
+        image: ghcr.io/mightymax/sparql-murder-mystery:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        env:
+        - name: SPARQL_ENDPOINT
+          value: https://api.triplydb.com/datasets/mark-lindeman/SPARQL-Murder-Mystery/sparql
+      imagePullSecrets:
+      - name: ghcr-creds
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sparql-murder-mystery
+  namespace: sparql-murder-mystery
+spec:
+  selector:
+    app: sparql-murder-mystery
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sparql-murder-mystery-ingress
+  namespace: sparql-murder-mystery
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: public
+  rules:
+  - host: sparql-murder-mystery.lindeman.it
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: sparql-murder-mystery
+            port:
+              number: 80
