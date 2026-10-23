@@ -4,4 +4,5 @@ resources:
   - manifest.yaml
 images:
   - name: ghcr.io/mightymax/sparql-murder-mystery-app
-    newTag: latest
+    newTag: v0.0.3
+    digest: sha256:598745d288f16d6b79bcfc1245c5b0476fa4cafe04b348b5996fb7ea4dfd01e3
